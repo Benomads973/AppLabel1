@@ -4,7 +4,7 @@ services:
 
   microlabelfront:
     build: # Build locally
-      context: ./frontend
+      context: ./front-end
     ports:
       - "8887:80"
 
@@ -12,16 +12,20 @@ services:
   microlabelback:
     #image: maissacrement/benomads-appmanager-back:0.0.1 # Get from internet
     build: # build locally
-      context: . # Building Docker file from '.' the current repository
+      context: ./back-end # Building Docker file from '.' the current repository
     depends_on:
-      - mysql
+      mysql:
+        condition: service_healthy
     ports:
       - "$APP_PORT:$APP_PORT"
+    networks:
+      - mysql-private-tunnel
     environment:
       APP_PORT: $APP_PORT
-      MYSQL_USER: $DB_USERNAME
-      MYSQL_PASSWORD: $DB_PASSWORD 
-      MYSQL_DATABASE: $DB_NAME
+      DB_USERNAME: $DB_USERNAME
+      DB_PASSWORD: $DB_PASSWORD 
+      DB_NAME: $DB_NAME
+      DB_HOSTNAME: $DB_HOSTNAME
       
   # N'exposé mongo que quand vous etes en devellopement
   # MONGODB MACHINE NAME
@@ -30,9 +34,17 @@ services:
     restart: always
     #ports:
     #  - 3306:3306
+    #expose:
+    #  - 3306
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost", "--connect-timeout", "4"]
+      interval: 5s
+      timeout: 5s
+      retries: 55
     networks:
-      - mongo-private-tunnel
+      - mysql-private-tunnel
     environment:
+      #HOSTNAME: db.mysql.local
       MYSQL_ROOT_PASSWORD: $DB_ROOT_PASSWORD
       MYSQL_USER: $DB_USERNAME
       MYSQL_PASSWORD: $DB_PASSWORD 
@@ -40,4 +52,4 @@ services:
       MYSQL_INITDB_SKIP_TZINFO: yes
 
 networks:
-  mongo-private-tunnel:
+  mysql-private-tunnel:
