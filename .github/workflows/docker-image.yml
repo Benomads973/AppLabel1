@@ -14,8 +14,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+    
     - name: Build the Docker image for AppLabelMysql Front
-      run: docker build ./front-end --file Dockerfile --tag maissacrement/benomads-applabel:mysql-react-front
+      run: docker build -t maissacrement/benomads-applabel:mysql-react-front ./front-end
     
     - name: Build the Docker image for AppLabelMysql Backend
-      run: docker build ./back-end --file Dockerfile --tag maissacrement/benomads-applabel:mysql-react-back
+      run: docker build -t maissacrement/benomads-applabel:mysql-react-back ./back-end
