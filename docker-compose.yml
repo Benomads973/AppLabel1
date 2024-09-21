@@ -1,0 +1,43 @@
+name: AppLabel
+
+services:
+
+  microlabelfront:
+    build: # Build locally
+      context: ./frontend
+    ports:
+      - "8887:80"
+
+  # BACKEND SERVER MACHINE NAME
+  microlabelback:
+    #image: maissacrement/benomads-appmanager-back:0.0.1 # Get from internet
+    build: # build locally
+      context: . # Building Docker file from '.' the current repository
+    depends_on:
+      - mysql
+    ports:
+      - "$APP_PORT:$APP_PORT"
+    environment:
+      APP_PORT: $APP_PORT
+      MYSQL_USER: $DB_USERNAME
+      MYSQL_PASSWORD: $DB_PASSWORD 
+      MYSQL_DATABASE: $DB_NAME
+      
+  # N'exposé mongo que quand vous etes en devellopement
+  # MONGODB MACHINE NAME
+  mysql:
+    image: mysql
+    restart: always
+    #ports:
+    #  - 3306:3306
+    networks:
+      - mongo-private-tunnel
+    environment:
+      MYSQL_ROOT_PASSWORD: $DB_ROOT_PASSWORD
+      MYSQL_USER: $DB_USERNAME
+      MYSQL_PASSWORD: $DB_PASSWORD 
+      MYSQL_DATABASE: $DB_NAME
+      MYSQL_INITDB_SKIP_TZINFO: yes
+
+networks:
+  mongo-private-tunnel:
