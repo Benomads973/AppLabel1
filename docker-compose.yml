@@ -3,7 +3,7 @@ name: AppLabelMysql
 services:
 
   microlabelfront:
-    image: maissacrement/benomads-applabel:mysql-react-front-0.0.1
+    image: $FRONT_DOCKER_IMAGE
     #build: # Build locally
     #  context: ./front-end
     ports:
@@ -11,7 +11,7 @@ services:
 
   # BACKEND SERVER MACHINE NAME
   microlabelback:
-    image: maissacrement/benomads-applabel:mysql-react-back-0.0.1 # Get from internet
+    image: $BACKEND_DOCKER_IMAGE # Get from internet
     #build: # build locally
     #  context: ./back-end # Building Docker file from '.' the current repository
     depends_on:
