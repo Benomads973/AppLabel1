@@ -1,0 +1,21 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build the Docker image for AppLabelMysql Front
+      run: docker build ./front-end --file Dockerfile --tag maissacrement/benomads-applabel:mysql-react-front
+    
+    - name: Build the Docker image for AppLabelMysql Backend
+      run: docker build ./back-end --file Dockerfile --tag maissacrement/benomads-applabel:mysql-react-back
