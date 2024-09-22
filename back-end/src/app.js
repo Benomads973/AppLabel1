@@ -5,12 +5,13 @@ const port = parseInt(process.env.APP_PORT) || undefined;
 const routes = require('./routes')
 
 /* DB denifinition */
-require('./model')
+// require('./model')
 /* DB END */
 
 if (typeof port != 'number' || port >= 65535) {
   throw new Error('APP_PORT env variable is not defined')
 }
+
 const app = express();
 
 app.use(cors());

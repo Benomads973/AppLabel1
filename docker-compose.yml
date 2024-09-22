@@ -1,19 +1,19 @@
-name: AppLabelMysql
+name: applabelmysql
 
 services:
 
   microlabelfront:
-    image: $FRONT_DOCKER_IMAGE
-    #build: # Build locally
-    #  context: ./front-end
+    # image: $FRONT_DOCKER_IMAGE
+    build: # Build locally
+      context: ./front-end
     ports:
       - "8887:80"
 
   # BACKEND SERVER MACHINE NAME
   microlabelback:
-    image: $BACKEND_DOCKER_IMAGE # Get from internet
-    #build: # build locally
-    #  context: ./back-end # Building Docker file from '.' the current repository
+    # image: $BACKEND_DOCKER_IMAGE # Get from internet
+    build: # build locally
+      context: ./back-end # Building Docker file from '.' the current repository
     depends_on:
       mysql:
         condition: service_healthy

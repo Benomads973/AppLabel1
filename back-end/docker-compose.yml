@@ -19,15 +19,15 @@ services:
       DB_USERNAME: $DB_USERNAME
       DB_PASSWORD: $DB_PASSWORD 
       DB_NAME: $DB_NAME
-      DB_HOSTNAME: $DB_HOSTNAME
+      # DB_HOSTNAME: $DB_HOSTNAME
       
   # N'exposé mongo que quand vous etes en devellopement
   # MONGODB MACHINE NAME
   mysql:
     image: mysql
     restart: always
-    #ports:
-    #  - 3306:3306
+    ports:
+     - 3306:3306
     #expose:
     #  - 3306
     healthcheck:
@@ -35,8 +35,8 @@ services:
       interval: 5s
       timeout: 5s
       retries: 55
-    networks:
-      - mysql-private-tunnel
+    # networks:
+    #   - mysql-private-tunnel
     environment:
       #HOSTNAME: db.mysql.local
       MYSQL_ROOT_PASSWORD: $DB_ROOT_PASSWORD
