@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-// const hello = require('./endpoints/hello')
 const helloRoute = require('./endpoints/hello')
 
 // middleware that is specific to this router

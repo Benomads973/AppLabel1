@@ -4,7 +4,7 @@ const config = Object.assign({}, require(__dirname + '/../config'))[ process.env
 
 const sequelize = new Sequelize(config);
 
-const db = {};
+const db = require('./index.js');
 
 (async() => {
     try {
