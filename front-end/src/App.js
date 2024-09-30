@@ -1,13 +1,22 @@
+import { useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { getData } from './providers/manifest'
 
 function App() {
+  const [client, setClient] = useState({"username": "", "appname": "", "password": "", "org": "", "logo": "" });
+  (async () => {
+    if(client.username === '') {
+      const payload = await getData()
+      setClient(payload)
+    }
+  })()
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+        <img src={!!client.logo ? client.logo : logo } className="App-logo" alt="logo" />
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          Bienvenu de la part de l'equipe de chez {client.org} sur {client.appname} je suis {client.username}
         </p>
         <a
           className="App-link"

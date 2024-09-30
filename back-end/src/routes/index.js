@@ -10,6 +10,6 @@ router.use(function timeLog(req, res, next) {
   next();
 });
 
-router.use('/', hello.world)
+router.get('/', hello.world)
 
 module.exports = router;

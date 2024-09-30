@@ -3,9 +3,6 @@ env ?= .env
 include $(env)
 export $(shell sed 's/=.*//' $(env))
 
-version:
-	@echo $(VERSION)
-
 login:
 	@docker login $(DOCKER_REPO)
 

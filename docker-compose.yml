@@ -3,9 +3,9 @@ name: AppLabelMysql
 services:
 
   microlabelfront:
-    image: $FRONT_DOCKER_IMAGE
-    #build: # Build locally
-    #  context: ./front-end
+    #image: $FRONT_DOCKER_IMAGE
+    build: # Build locally
+      context: ./front-end
     ports:
       - "8887:80"
 
